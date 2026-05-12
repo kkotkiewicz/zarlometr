@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
 import AppShell from "./components/layout/AppShell";
+import PageTransition from "./components/PageTransition";
 
+// Auth pages
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
 import OnboardingPage from "./pages/auth/OnboardingPage";
 
+// App pages
 import DashboardPage from "./pages/app/DashboardPage";
 import JournalPage from "./pages/app/JournalPage";
 import AddMealPage from "./pages/app/AddMealPage";
@@ -25,19 +28,31 @@ function PublicRoute({ children }) {
 function Router() {
   return (
     <Routes>
-      {/* ── Without nav ── */}
-      <Route path="/login"      element={<PublicRoute><LoginPage /></PublicRoute>} />
-      <Route path="/register"   element={<PublicRoute><RegisterPage /></PublicRoute>} />
-      <Route path="/onboarding" element={<PrivateRoute><OnboardingPage /></PrivateRoute>} />
+      {/* ── Bez nawigacji ── */}
+      <Route path="/login" element={
+        <PublicRoute>
+          <PageTransition><LoginPage /></PageTransition>
+        </PublicRoute>
+      } />
+      <Route path="/register" element={
+        <PublicRoute>
+          <PageTransition><RegisterPage /></PageTransition>
+        </PublicRoute>
+      } />
+      <Route path="/onboarding" element={
+        <PrivateRoute>
+          <PageTransition><OnboardingPage /></PageTransition>
+        </PrivateRoute>
+      } />
 
-      {/* ── WIth nav (AppShell) ── */}
+      {/* ── Z nawigacją (AppShell) ── */}
       <Route element={<PrivateRoute><AppShell /></PrivateRoute>}>
-        <Route path="/"               element={<DashboardPage />} />
-        <Route path="/journal"        element={<JournalPage />} />
-        <Route path="/journal/:date"  element={<JournalPage />} />
-        <Route path="/add"            element={<AddMealPage />} />
-        <Route path="/recipes"        element={<RecipesPage />} />
-        <Route path="/progress"       element={<ProgressPage />} />
+        <Route path="/"              element={<PageTransition><DashboardPage /></PageTransition>} />
+        <Route path="/journal"       element={<PageTransition><JournalPage /></PageTransition>} />
+        <Route path="/journal/:date" element={<PageTransition><JournalPage /></PageTransition>} />
+        <Route path="/add"           element={<PageTransition><AddMealPage /></PageTransition>} />
+        <Route path="/recipes"       element={<PageTransition><RecipesPage /></PageTransition>} />
+        <Route path="/progress"      element={<PageTransition><ProgressPage /></PageTransition>} />
       </Route>
 
       {/* ── Fallback ── */}
