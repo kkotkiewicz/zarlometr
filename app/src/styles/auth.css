@@ -1,0 +1,93 @@
+/* ── Wspólny layout auth ── */
+.auth-root {
+  min-height: 100dvh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.auth-logo {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.auth-card {
+  max-width: 360px;
+}
+
+.auth-bottom-row {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 0.88rem;
+  color: var(--color-on-surface-var);
+}
+
+.auth-bottom-link {
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-left: 4px;
+}
+
+.auth-bottom-link:hover {
+  text-decoration: underline;
+}
+
+/* ── LoginPage ── */
+.login-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-bottom: 4px;
+}
+
+.login-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-on-surface-var);
+  margin-bottom: 28px;
+}
+
+.login-forgot-row {
+  text-align: right;
+  margin-bottom: 24px;
+}
+
+.login-forgot-link {
+  font-size: 0.82rem;
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.login-forgot-link:hover {
+  text-decoration: underline;
+}
+
+/* ── RegisterPage ── */
+.register-heading {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.register-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-on-surface-var);
+  text-align: center;
+  margin-bottom: 28px;
+  line-height: 1.5;
+}
+
+.register-logo-margin {
+  margin-bottom: 20px;
+}

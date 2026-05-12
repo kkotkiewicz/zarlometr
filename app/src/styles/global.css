@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@400;500;600&display=swap');
+
+/* ── Reset ── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Zmienne ── */
+:root {
+  --color-bg:             #0B0D1A;
+  --color-surface:        #161928;
+  --color-surface-high:   #222537;
+  --color-surface-bright: #282B3F;
+  --color-primary:        #B4C1FB;
+  --color-primary-dim:    #919ED6;
+  --color-secondary:      #E8E971;
+  --color-tertiary:       #E8935A;
+  --color-on-surface:     #E9E9FC;
+  --color-on-surface-var: #C5C6D0;
+  --color-outline:        #454756;
+  --color-error:          #FF6B6B;
+
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body:    'Manrope', sans-serif;
+
+  --radius-card:  24px;
+  --radius-input: 14px;
+  --radius-btn:   50px;
+  --radius-chip:  8px;
+
+  --nav-height:    64px;
+  --header-height: 56px;
+}
+
+/* ── Base ── */
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-on-surface);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+}
+
+input,
+textarea {
+  font-family: var(--font-body);
+}
