@@ -6,7 +6,6 @@ import PageTransition from "./components/PageTransition";
 // Auth pages
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import OnboardingPage from "./pages/auth/OnboardingPage";
 
 // App pages
 import DashboardPage from "./pages/app/DashboardPage";
@@ -14,6 +13,7 @@ import JournalPage from "./pages/app/JournalPage";
 import AddMealPage from "./pages/app/AddMealPage";
 import RecipesPage from "./pages/app/RecipesPage";
 import ProgressPage from "./pages/app/ProgressPage";
+import OnboardingPage from "./pages/app/OnboardingPage";
 
 function PrivateRoute({ children }) {
   const { isLoggedIn } = useAuth();
