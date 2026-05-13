@@ -1,0 +1,337 @@
+/* ── Dashboard layout ── */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Kcal ring card ── */
+.kcal-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 24px 20px 22px;
+}
+
+.kcal-ring-wrap {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 4px auto 8px;
+}
+
+.kcal-ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.kcal-ring-track {
+  fill: none;
+  stroke: var(--color-surface-high);
+  stroke-width: 14;
+}
+
+.kcal-ring-fill {
+  fill: none;
+  stroke: var(--color-secondary);
+  stroke-width: 14;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 8px rgba(232, 233, 113, 0.45));
+  transition: stroke-dashoffset 0.6s ease;
+}
+
+.kcal-ring-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.kcal-ring-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.kcal-ring-value {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.1;
+}
+
+.kcal-ring-unit {
+  font-size: 0.85rem;
+  color: var(--color-on-surface-var);
+  margin-top: 2px;
+}
+
+.kcal-stats {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 14px;
+  margin-top: 10px;
+  border-top: 1px solid var(--color-surface-high);
+}
+
+.kcal-stat {
+  text-align: center;
+}
+
+.kcal-stat-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+  margin-bottom: 6px;
+}
+
+.kcal-stat-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+/* ── Macros section ── */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  margin-bottom: 12px;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-head .section-title {
+  margin-bottom: 0;
+}
+
+.section-head-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.section-head-link:hover {
+  text-decoration: underline;
+}
+
+.macros-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.macro-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.macro-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.macro-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.macro-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.macro-dot--protein { background: var(--color-tertiary); }
+.macro-dot--carbs   { background: var(--color-secondary); }
+.macro-dot--fat     { background: var(--color-primary); }
+
+.macro-amount {
+  font-size: 0.82rem;
+  color: var(--color-on-surface-var);
+}
+
+/* ── Mini stat cards row ── */
+.mini-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.mini-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mini-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.mini-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.mini-icon--water {
+  background: rgba(180, 193, 251, 0.18);
+  color: var(--color-primary);
+}
+
+.mini-icon--bolt {
+  background: rgba(232, 233, 113, 0.18);
+  color: var(--color-secondary);
+}
+
+.mini-value {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.mini-value-suffix {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-on-surface-var);
+}
+
+.mini-label {
+  font-size: 0.82rem;
+  color: var(--color-on-surface-var);
+}
+
+.mini-action {
+  margin-top: 6px;
+  align-self: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-high);
+  color: var(--color-on-surface);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mini-action:hover {
+  background: var(--color-surface-bright);
+}
+
+.mini-streak {
+  margin-top: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--color-on-surface-var);
+}
+
+.mini-streak-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(232, 147, 90, 0.18);
+  color: var(--color-tertiary);
+  border-radius: 99px;
+  padding: 2px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+/* ── Last meal card ── */
+.meal-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.meal-thumb {
+  width: 84px;
+  height: 84px;
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(232, 147, 90, 0.35), rgba(232, 233, 113, 0.25)),
+    var(--color-surface-high);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.meal-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meal-name {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+}
+
+.meal-meta {
+  font-size: 0.8rem;
+  color: var(--color-on-surface-var);
+}
+
+.meal-chips {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
