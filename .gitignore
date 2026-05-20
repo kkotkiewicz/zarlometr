@@ -119,6 +119,9 @@ dist
 # Firebase cache directory
 .firebase/
 
+# Firebase local config (contains API keys — each dev creates their own)
+app/src/firebase.js
+
 # TernJS port file
 .tern-port
 

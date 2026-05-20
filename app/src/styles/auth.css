@@ -70,6 +70,52 @@
   text-decoration: underline;
 }
 
+/* ── Przycisk Google ── */
+.btn-google {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-btn);
+  border: 1.5px solid var(--color-outline);
+  background: transparent;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.btn-google:hover {
+  border-color: var(--color-primary);
+  background: rgba(180, 193, 251, 0.06);
+}
+
+.btn-google:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Separator ── */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 12px;
+  color: var(--color-on-surface-var);
+  font-size: 0.82rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--color-outline);
+}
+
 /* ── RegisterPage ── */
 .register-heading {
   font-family: var(--font-display);
