@@ -17,14 +17,12 @@ import ProgressPage from "./pages/app/ProgressPage";
 import OnboardingPage from "./pages/app/OnboardingPage";
 
 function PrivateRoute({ children }) {
-  const { isLoggedIn, loading } = useAuth();
-  if (loading) return null;
+  const { isLoggedIn } = useAuth();
   return isLoggedIn ? children : <Navigate to="/login" replace />;
 }
 
 function PublicRoute({ children }) {
-  const { isLoggedIn, loading } = useAuth();
-  if (loading) return null;
+  const { isLoggedIn } = useAuth();
   return isLoggedIn ? <Navigate to="/" replace /> : children;
 }
 
