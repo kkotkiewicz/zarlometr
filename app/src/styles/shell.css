@@ -39,6 +39,17 @@
   color: var(--color-on-surface);
 }
 
+.topbar-avatar--btn {
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.topbar-avatar--btn:hover {
+  background: var(--color-surface-bright);
+  transform: scale(1.05);
+}
+
 .topbar-title {
   font-family: var(--font-display);
   font-size: 1.25rem;

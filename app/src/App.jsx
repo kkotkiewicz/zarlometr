@@ -15,6 +15,7 @@ import AddMealPage from "./pages/app/AddMealPage";
 import RecipesPage from "./pages/app/RecipesPage";
 import ProgressPage from "./pages/app/ProgressPage";
 import OnboardingPage from "./pages/app/OnboardingPage";
+import SettingsPage from "./pages/app/SettingsPage";
 
 function PrivateRoute({ children }) {
   const { isLoggedIn, loading } = useAuth();
@@ -45,6 +46,11 @@ function Router() {
       <Route path="/onboarding" element={
         <PrivateRoute>
           <PageTransition><OnboardingPage /></PageTransition>
+        </PrivateRoute>
+      } />
+      <Route path="/settings" element={
+        <PrivateRoute>
+          <PageTransition><SettingsPage /></PageTransition>
         </PrivateRoute>
       } />
 

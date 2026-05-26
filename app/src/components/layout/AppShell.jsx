@@ -68,7 +68,14 @@ export default function AppShell() {
     <div className="shell">
       <main className="shell-main">
         <header className="topbar">
-          <div className="topbar-avatar">{getInitials(user)}</div>
+          <button
+            type="button"
+            className="topbar-avatar topbar-avatar--btn"
+            onClick={() => navigate("/settings")}
+            aria-label="Ustawienia profilu"
+          >
+            {getInitials(user)}
+          </button>
           <div className="topbar-title">Żarłometr</div>
         </header>
 
