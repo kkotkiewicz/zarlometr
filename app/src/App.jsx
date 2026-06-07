@@ -14,6 +14,7 @@ import JournalPage from "./pages/app/JournalPage";
 import AddMealPage from "./pages/app/AddMealPage";
 import RecipesPage from "./pages/app/RecipesPage";
 import ProgressPage from "./pages/app/ProgressPage";
+import ProfilePage from "./pages/app/ProfilePage";
 import OnboardingPage from "./pages/app/OnboardingPage";
 import SettingsPage from "./pages/app/SettingsPage";
 
@@ -51,6 +52,11 @@ function Router() {
       <Route path="/settings" element={
         <PrivateRoute>
           <PageTransition><SettingsPage /></PageTransition>
+        </PrivateRoute>
+      } />
+      <Route path="/profile" element={
+        <PrivateRoute>
+          <PageTransition><ProfilePage /></PageTransition>
         </PrivateRoute>
       } />
 

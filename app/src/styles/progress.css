@@ -1,0 +1,326 @@
+/* ── Progress layout ── */
+.progress {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Weight chart card ── */
+.weight-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 18px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.weight-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.weight-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.weight-value {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.05;
+  margin-top: 4px;
+}
+
+.weight-value span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--color-on-surface-var);
+  margin-left: 4px;
+}
+
+.weight-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface-high);
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: var(--color-on-surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.weight-delta svg {
+  width: 16px;
+  height: 16px;
+  stroke: var(--color-secondary);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.weight-delta-num {
+  color: var(--color-secondary);
+}
+
+.weight-delta-text {
+  color: var(--color-on-surface-var);
+  font-weight: 500;
+}
+
+.weight-chart {
+  background: var(--color-surface-high);
+  border-radius: 18px;
+  padding: 14px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.weight-chart-plot {
+  position: relative;
+}
+
+.weight-chart svg {
+  width: 100%;
+  height: 130px;
+  display: block;
+  overflow: visible;
+}
+
+/* koło jako element HTML — w rozciąganym SVG byłoby elipsą */
+.weight-chart-dot {
+  position: absolute;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px rgba(232, 233, 113, 0.55);
+  pointer-events: none;
+}
+
+.weight-chart-axis {
+  display: flex;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.weight-chart-axis span {
+  flex: 1;
+  text-align: center;
+}
+
+/* ── Forecast card ── */
+.forecast-card {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dim));
+  border-radius: var(--radius-card);
+  padding: 22px 22px 24px;
+  color: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.forecast-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(11, 13, 26, 0.18);
+  color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.forecast-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.forecast-title {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.forecast-text {
+  font-size: 0.92rem;
+  opacity: 0.85;
+  line-height: 1.4;
+}
+
+/* ── Avg kcal card ── */
+.avg-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.avg-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.avg-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.avg-pill {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(180, 193, 251, 0.18);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avg-pill svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+.avg-value {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.05;
+  margin-top: 4px;
+}
+
+.avg-delta {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.avg-delta--over  { color: var(--color-error); }
+.avg-delta--under { color: var(--color-secondary); }
+
+.avg-bars {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  height: 70px;
+  align-items: flex-end;
+  margin-top: 12px;
+}
+
+.avg-bar {
+  background: var(--color-surface-high);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.avg-bar--today {
+  background: var(--color-primary);
+}
+
+/* ── Progress macros ── */
+.progress-macros {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.progress-macros-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+  margin-bottom: 4px;
+}
+
+.progress-macro-name {
+  font-family: var(--font-display);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+.progress-macro-name--protein { color: var(--color-tertiary); }
+.progress-macro-name--carbs   { color: var(--color-secondary); }
+.progress-macro-name--fat     { color: var(--color-primary); }
+
+/* ── Streak card ── */
+.streak-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.streak-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: var(--color-secondary);
+  color: var(--color-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 18px rgba(232, 233, 113, 0.45);
+  flex-shrink: 0;
+}
+
+.streak-icon svg {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 0.5;
+  stroke-linejoin: round;
+}
+
+.streak-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.1;
+}
+
+.streak-text {
+  font-size: 0.86rem;
+  color: var(--color-on-surface-var);
+  margin-top: 4px;
+  line-height: 1.4;
+}

@@ -1,4 +1,7 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import MealReminder from "../../components/MealReminder";
+import { FOOD_IMAGES } from "../../foodImages";
 import "../../styles/dashboard.css";
 
 const summary = {
@@ -16,8 +19,8 @@ const summary = {
     meal: "Obiad",
     time: "14:30",
     protein: 32,
-    kcal: 540,
-    emoji: "🥗",
+    kcal: 410,
+    image: FOOD_IMAGES.bowl,
   },
 };
 
@@ -25,8 +28,8 @@ function KcalRing({ consumed, goal }) {
   const radius = 92;
   const circumference = 2 * Math.PI * radius;
   const remaining = Math.max(goal - consumed, 0);
-  const remainingRatio = goal > 0 ? remaining / goal : 0;
-  const dashOffset = circumference * (1 - remainingRatio);
+  const consumedRatio = goal > 0 ? Math.min(consumed / goal, 1) : 0;
+  const dashOffset = circumference * (1 - consumedRatio);
 
   return (
     <div className="kcal-ring-wrap">
@@ -91,15 +94,22 @@ function IconBolt() {
 
 export default function DashboardPage() {
   const { consumed, goal, macros, hydration, steps, lastMeal } = summary;
+  const [reminderOpen, setReminderOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div className="dashboard">
+      <MealReminder
+        open={reminderOpen}
+        onClose={() => setReminderOpen(false)}
+        onLog={() => navigate("/add")}
+      />
       <section className="kcal-card">
         <KcalRing consumed={consumed} goal={goal} />
         <div className="kcal-stats">
           <div className="kcal-stat">
-            <div className="kcal-stat-label">Spożyto</div>
-            <div className="kcal-stat-value">{consumed.toLocaleString("pl-PL")}</div>
+            <div className="kcal-stat-label kcal-stat-label--consumed">Spożyto</div>
+            <div className="kcal-stat-value kcal-stat-value--consumed">{consumed.toLocaleString("pl-PL")}</div>
           </div>
           <div className="kcal-stat">
             <div className="kcal-stat-label">Cel</div>
@@ -143,10 +153,15 @@ export default function DashboardPage() {
             <div className="mini-value">{steps.current.toLocaleString("pl-PL")}</div>
           </div>
           <div className="mini-label">Kroki</div>
-          <div className="mini-streak">
+          <button
+            type="button"
+            className="mini-streak"
+            onClick={() => setReminderOpen(true)}
+            aria-label="Pokaż przypomnienie o posiłku"
+          >
             <span className="mini-streak-badge">🔥 +{steps.deltaDays}</span>
             Seria: {steps.streakDays} dni
-          </div>
+          </button>
         </div>
       </section>
 
@@ -156,7 +171,9 @@ export default function DashboardPage() {
           <Link to="/journal" className="section-head-link">Zobacz wszystkie</Link>
         </div>
         <div className="meal-card">
-          <div className="meal-thumb" aria-hidden>{lastMeal.emoji}</div>
+          <div className="meal-thumb">
+            <img className="meal-thumb-img" src={lastMeal.image} alt={lastMeal.name} loading="lazy" />
+          </div>
           <div className="meal-body">
             <div className="meal-name">{lastMeal.name}</div>
             <div className="meal-meta">{lastMeal.meal} • {lastMeal.time}</div>

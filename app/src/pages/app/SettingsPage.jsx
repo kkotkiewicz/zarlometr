@@ -22,6 +22,23 @@ const GOALS = [
   { id: "masa",       label: "Masa" },
 ];
 
+// defPace: wartość, do której skacze klik w dany segment.
+const GOAL_META = {
+  redukcja:   { sliderLabel: "Tempo redukcji",  defPace: -0.5 },
+  utrzymanie: { sliderLabel: "Tempo zmian",     defPace: 0    },
+  masa:       { sliderLabel: "Tempo przyrostu", defPace: 0.5  },
+};
+
+function paceToGoal(pace) {
+  if (pace < 0) return "redukcja";
+  if (pace > 0) return "masa";
+  return "utrzymanie";
+}
+
+function formatPace(v) {
+  return `${v >= 0 ? "+" : ""}${v.toFixed(1)}`;
+}
+
 function ParamTile({ label, value, unit, wide, onChange, pattern }) {
   return (
     <div className={`settings-param-tile${wide ? " settings-param-tile--wide" : ""}`}>
@@ -84,7 +101,6 @@ export default function SettingsPage() {
     weight: "82",
     height: "185",
     age: "30",
-    goal: "redukcja",
     pace: -0.5,
     notifMeals: true,
     notifWater: false,
@@ -95,6 +111,8 @@ export default function SettingsPage() {
     setForm((prev) => ({ ...prev, [field]: value }));
     setSavedAt(null);
   }
+
+  const goal = paceToGoal(form.pace);
 
   function handleSave(e) {
     e.preventDefault();
@@ -213,9 +231,9 @@ export default function SettingsPage() {
                 key={g.id}
                 type="button"
                 role="tab"
-                aria-selected={form.goal === g.id}
-                className={`settings-seg-btn ${form.goal === g.id ? "settings-seg-btn--active" : ""}`}
-                onClick={() => update("goal", g.id)}
+                aria-selected={goal === g.id}
+                className={`settings-seg-btn ${goal === g.id ? "settings-seg-btn--active" : ""}`}
+                onClick={() => update("pace", GOAL_META[g.id].defPace)}
               >
                 {g.label}
               </button>
@@ -224,20 +242,26 @@ export default function SettingsPage() {
 
           <div className="settings-slider-block">
             <div className="settings-slider-head">
-              <span className="settings-slider-label">Tempo redukcji</span>
+              <span className="settings-slider-label">{GOAL_META[goal].sliderLabel}</span>
               <span className="settings-slider-value">
-                {form.pace.toFixed(1)} kg / tydz.
+                {formatPace(form.pace)} kg / tydz.
               </span>
             </div>
             <input
               className="settings-slider"
               type="range"
               min="-1"
-              max="0"
+              max="1"
               step="0.1"
               value={form.pace}
-              onChange={(e) => update("pace", Number(e.target.value))}
+              onChange={(e) => update("pace", Math.round(Number(e.target.value) * 10) / 10)}
+              aria-label={GOAL_META[goal].sliderLabel}
             />
+            <div className="settings-slider-scale" aria-hidden>
+              <span>−1.0</span>
+              <span>0</span>
+              <span>+1.0</span>
+            </div>
           </div>
         </Card>
       </section>

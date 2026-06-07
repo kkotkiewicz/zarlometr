@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import "../../styles/onboarding.css";
@@ -70,18 +70,13 @@ export default function OnboardingPage() {
   const [height, setHeight]   = useState("");
   const [weight, setWeight]   = useState("");
   const [target, setTarget]   = useState("");
-  const [goal, setGoal]       = useState("cut");
-  const [tempo, setTempo]     = useState(0.5);
+  const [pace, setPace]       = useState(-0.5);
   const [error, setError]     = useState("");
   const [loading, setLoading] = useState(false);
 
-  /* -0.5 dla redukcji, +0.5 dla masy, 0 dla utrzymania */
-  const tempoDisplay = useMemo(() => {
-    const sign = GOALS.find((g) => g.id === goal)?.sign ?? 0;
-    if (sign === 0) return "0";
-    const value = (sign * tempo).toFixed(1);
-    return value > 0 ? `+${value}` : value;
-  }, [goal, tempo]);
+  // Cel wynika ze znaku tempa: <0 redukcja, 0 utrzymanie, >0 masa.
+  const goal = pace < 0 ? "cut" : pace > 0 ? "bulk" : "maintain";
+  const tempoDisplay = `${pace >= 0 ? "+" : ""}${pace.toFixed(1)}`;
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -106,7 +101,7 @@ export default function OnboardingPage() {
         weight: Number(weight),
         targetWeight: Number(target),
         goal,
-        tempo: Number(tempo),
+        pace: Number(pace),
       },
     });
 
@@ -229,7 +224,7 @@ export default function OnboardingPage() {
             <div className="onb-field-group">
               <label className="field-label">Cel główny</label>
               <div className="goal-grid" role="radiogroup" aria-label="Cel główny">
-                {GOALS.map(({ id, label, icon: Icon }) => {
+                {GOALS.map(({ id, label, icon: Icon, sign }) => {
                   const active = goal === id;
                   return (
                     <button
@@ -238,7 +233,7 @@ export default function OnboardingPage() {
                       role="radio"
                       aria-checked={active}
                       className={`goal-btn ${active ? "goal-btn--active" : ""}`}
-                      onClick={() => setGoal(id)}
+                      onClick={() => setPace(sign * 0.5)}
                     >
                       <Icon />
                       <span className="goal-btn__label">{label}</span>
@@ -257,20 +252,17 @@ export default function OnboardingPage() {
               <input
                 className="tempo-slider"
                 type="range"
-                /* min=0 daje 0.5 dokładnie na środku przy step=0.1 */
-                min="0"
-                max="1.0"
+                min="-1"
+                max="1"
                 step="0.1"
-                /* przy "Utrzymaniu" thumb wizualnie na środku (0.5),
-                   ale stan `tempo` zostaje bez zmian — wraca po wyborze cut/bulk */
-                value={goal === "maintain" ? 0.5 : tempo}
-                onChange={(e) => setTempo(parseFloat(e.target.value))}
-                disabled={goal === "maintain"}
+                value={pace}
+                onChange={(e) => setPace(Math.round(parseFloat(e.target.value) * 10) / 10)}
                 aria-label="Tempo zmian wagi"
               />
-              <div className="tempo-edges">
-                <span>Powolne (zdrowsze)</span>
-                <span>Agresywne (szybsze)</span>
+              <div className="tempo-edges" aria-hidden>
+                <span>−1.0</span>
+                <span>0</span>
+                <span>+1.0</span>
               </div>
             </div>
           </section>

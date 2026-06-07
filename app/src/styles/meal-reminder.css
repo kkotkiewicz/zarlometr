@@ -1,0 +1,235 @@
+.reminder-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 13, 26, 0.78);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 1000;
+  animation: reminder-fade 0.2s ease-out;
+}
+
+@keyframes reminder-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.reminder-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: var(--color-surface);
+  border-radius: 26px;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  animation: reminder-pop 0.25s ease-out;
+}
+
+@keyframes reminder-pop {
+  from { transform: translateY(12px) scale(0.96); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.reminder-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-var);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.reminder-close:hover {
+  background: var(--color-surface-high);
+  color: var(--color-on-surface);
+}
+
+.reminder-close svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.reminder-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-right: 24px;
+}
+
+.reminder-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(180, 193, 251, 0.18);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.reminder-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.reminder-title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.15;
+}
+
+.reminder-streak {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-secondary);
+}
+
+.reminder-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-secondary);
+  box-shadow: 0 0 8px var(--color-secondary);
+}
+
+.reminder-text {
+  font-size: 1rem;
+  color: var(--color-on-surface);
+  line-height: 1.4;
+}
+
+.reminder-text strong {
+  color: var(--color-on-surface);
+}
+
+.reminder-progress {
+  background: var(--color-surface-high);
+  border-radius: 18px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reminder-rings {
+  display: inline-flex;
+  align-items: center;
+}
+
+.reminder-ring {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid var(--color-secondary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-secondary);
+  background: transparent;
+  margin-left: -10px;
+}
+
+.reminder-ring:first-child {
+  margin-left: 0;
+}
+
+.reminder-ring--current {
+  background: var(--color-secondary);
+  color: var(--color-bg);
+  box-shadow: 0 0 14px rgba(232, 233, 113, 0.5);
+}
+
+.reminder-ring--current svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 0.5;
+}
+
+.reminder-next {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.reminder-next-label {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.reminder-next-value {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.reminder-cta {
+  width: 100%;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dim));
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(180, 193, 251, 0.3);
+  transition: transform 0.15s;
+}
+
+.reminder-cta:hover {
+  transform: translateY(-1px);
+}
+
+.reminder-skip {
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-var);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  align-self: center;
+}
+
+.reminder-skip:hover {
+  color: var(--color-on-surface);
+}

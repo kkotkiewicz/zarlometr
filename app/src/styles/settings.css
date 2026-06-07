@@ -220,6 +220,16 @@
   cursor: pointer;
 }
 
+.settings-slider-scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-on-surface-var);
+}
+
 .settings-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;

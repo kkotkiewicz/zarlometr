@@ -113,6 +113,24 @@
   color: var(--color-primary);
 }
 
+/* ── Mały okrągły przycisk akcji (reużywalny) ── */
+.mini-action {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-surface-high);
+  color: var(--color-primary);
+  border: none;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.mini-action:hover {
+  background: var(--color-surface-bright);
+}
+
 /* ── Chipy makroskładników ── */
 .chip {
   display: inline-flex;

@@ -1,0 +1,224 @@
+/* ── Recipes layout ── */
+.recipes {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.recipes-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.recipes-title {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1;
+}
+
+.recipes-lead {
+  font-size: 0.92rem;
+  color: var(--color-on-surface-var);
+}
+
+.recipes-create {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dim));
+  color: var(--color-bg);
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  width: 100%;
+  max-width: 360px;
+  margin-top: 6px;
+  box-shadow: 0 0 24px rgba(180, 193, 251, 0.25);
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.recipes-create:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 0 30px rgba(180, 193, 251, 0.4);
+}
+
+.recipes-create svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}
+
+/* ── Recipe tile ── */
+.recipes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.recipe-tile {
+  background: var(--color-surface);
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-tile-photo {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(232, 147, 90, 0.45), transparent 60%),
+    radial-gradient(circle at 75% 70%, rgba(232, 233, 113, 0.4), transparent 60%),
+    var(--color-surface-high);
+}
+
+.recipe-tile-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.recipe-tile-photo--salmon {
+  background:
+    radial-gradient(circle at 30% 35%, rgba(232, 147, 90, 0.45), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(180, 193, 251, 0.35), transparent 60%),
+    var(--color-surface-high);
+}
+
+.recipe-tile-photo--oats {
+  background:
+    radial-gradient(circle at 30% 30%, rgba(180, 193, 251, 0.45), transparent 60%),
+    radial-gradient(circle at 70% 70%, rgba(232, 233, 113, 0.35), transparent 60%),
+    var(--color-surface-high);
+}
+
+.recipe-tile-kcal {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: rgba(11, 13, 26, 0.78);
+  color: var(--color-secondary);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(6px);
+}
+
+.recipe-tile-body {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.recipe-tile-name {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.1;
+}
+
+.recipe-tile-macros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  background: var(--color-surface-high);
+  border-radius: 16px;
+  padding: 12px;
+}
+
+.rt-macro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: left;
+}
+
+.rt-macro-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rt-macro-label--protein { color: var(--color-tertiary); }
+.rt-macro-label--carbs   { color: var(--color-secondary); }
+.rt-macro-label--fat     { color: var(--color-primary); }
+
+.rt-macro-value {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.recipe-tile-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.recipe-tile-details {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-surface-high);
+  border: none;
+  border-radius: 999px;
+  padding: 12px 18px;
+  color: var(--color-on-surface);
+  font-weight: 600;
+  font-size: 0.92rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.recipe-tile-details:hover {
+  background: var(--color-surface-bright);
+}
+
+.recipe-tile-details svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* większy wariant .mini-action */
+.recipe-tile-add {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
