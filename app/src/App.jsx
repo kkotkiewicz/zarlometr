@@ -1,5 +1,7 @@
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./context/AuthContext";
+import { initHotjar } from "./lib/analytics";
 import AnalyticsListener from "./components/AnalyticsListener";
 import AppShell from "./components/layout/AppShell";
 import PageTransition from "./components/PageTransition";
@@ -17,6 +19,9 @@ import ProgressPage from "./pages/app/ProgressPage";
 import ProfilePage from "./pages/app/ProfilePage";
 import OnboardingPage from "./pages/app/OnboardingPage";
 import SettingsPage from "./pages/app/SettingsPage";
+
+// Misc
+import NotFoundPage from "./pages/NotFoundPage";
 
 function PrivateRoute({ children }) {
   const { isLoggedIn, loading } = useAuth();
@@ -70,13 +75,17 @@ function Router() {
         <Route path="/progress"      element={<PageTransition><ProgressPage /></PageTransition>} />
       </Route>
 
-      {/* ── Fallback ── */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* ── Fallback 404 ── */}
+      <Route path="*" element={<PageTransition><NotFoundPage /></PageTransition>} />
     </Routes>
   );
 }
 
 export default function App() {
+  useEffect(() => {
+    initHotjar();
+  }, []);
+
   return (
     <AuthProvider>
       <BrowserRouter>

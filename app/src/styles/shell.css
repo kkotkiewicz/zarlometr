@@ -61,6 +61,31 @@
   font-size: 1.25rem;
   font-weight: 700;
   color: var(--color-on-surface);
+  flex: 1;
+}
+
+.topbar-logout {
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-var);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s;
+}
+
+.topbar-logout svg {
+  width: 20px;
+  height: 20px;
+}
+
+.topbar-logout:hover {
+  color: var(--color-error);
+  background: rgba(255, 107, 107, 0.1);
 }
 
 /* ── Bottom navigation ── */

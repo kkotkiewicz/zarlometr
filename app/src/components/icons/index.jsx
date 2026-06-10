@@ -159,6 +159,25 @@ export function IconActivity(props) {
   );
 }
 
+export function IconClose(props) {
+  return (
+    <Svg strokeWidth={2} {...props}>
+      <line x1="18" y1="6" x2="6" y2="18" />
+      <line x1="6" y1="6" x2="18" y2="18" />
+    </Svg>
+  );
+}
+
+export function IconCutlery(props) {
+  return (
+    <Svg strokeWidth={1.7} {...props}>
+      <path d="M3 2v7c0 1.1.9 2 2 2a2 2 0 0 0 2-2V2" />
+      <path d="M7 2v20" />
+      <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7" />
+    </Svg>
+  );
+}
+
 export function IconGoogle({ size = 18 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
