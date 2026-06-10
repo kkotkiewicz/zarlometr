@@ -47,9 +47,19 @@ function IconPlus() {
   );
 }
 
+function IconLogout() {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M15 17v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v2" />
+      <path d="M20 12H10" />
+      <path d="m17 9 3 3-3 3" />
+    </svg>
+  );
+}
+
 function getInitials(user) {
   if (!user) return "TPF";
-  const source = user.name || user.email || "";
+  const source = user.displayName || user.name || user.email || "";
   const parts = source.trim().split(/[\s@.]+/).filter(Boolean);
   if (parts.length === 0) return "TPF";
   const letters = (parts[0][0] + (parts[1]?.[0] ?? "")).toUpperCase();
@@ -61,8 +71,13 @@ function navClass({ isActive }) {
 }
 
 export default function AppShell() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
+
+  async function handleLogout() {
+    await logout();
+    navigate("/login", { replace: true });
+  }
 
   return (
     <div className="shell">
@@ -77,6 +92,15 @@ export default function AppShell() {
             {getInitials(user)}
           </button>
           <div className="topbar-title">Żarłometr</div>
+          <button
+            type="button"
+            className="topbar-logout"
+            onClick={handleLogout}
+            aria-label="Wyloguj się"
+            title="Wyloguj się"
+          >
+            <IconLogout />
+          </button>
         </header>
 
         <Outlet />
