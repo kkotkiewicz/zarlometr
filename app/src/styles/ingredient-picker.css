@@ -1,0 +1,239 @@
+/* ── Picker (wyszukiwarka + lista + ilość + dodaj) ── */
+.ingredient-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--color-surface);
+  border-radius: 16px;
+}
+
+/* ── Wyszukiwarka ── */
+.ingredient-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 14px;
+  background: var(--color-surface-high);
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.ingredient-search:focus-within {
+  border-color: var(--color-primary);
+}
+
+.ingredient-search > svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  stroke: var(--color-on-surface-var);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ingredient-search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 12px 0;
+  color: var(--color-on-surface);
+  font-size: 0.92rem;
+  font-family: inherit;
+  outline: none;
+  min-width: 0;
+}
+
+.ingredient-search input::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.ingredient-search-clear {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-surface-bright);
+  color: var(--color-on-surface-var);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.ingredient-search-clear svg {
+  width: 12px;
+  height: 12px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+/* ── Lista składników (scrollable) ── */
+.ingredient-options {
+  list-style: none;
+  margin: 0;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+  background: var(--color-surface-high);
+  border-radius: 12px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-surface-bright) transparent;
+}
+
+.ingredient-options::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ingredient-options::-webkit-scrollbar-thumb {
+  background: var(--color-surface-bright);
+  border-radius: 3px;
+}
+
+.ingredient-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.15s;
+  user-select: none;
+}
+
+.ingredient-option:hover {
+  background: rgba(180, 193, 251, 0.08);
+}
+
+.ingredient-option.is-active {
+  background: rgba(180, 193, 251, 0.16);
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.ingredient-option-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-on-surface-var);
+}
+
+.ingredient-option-dot--protein { background: var(--color-tertiary); }
+.ingredient-option-dot--carbs   { background: var(--color-secondary); }
+.ingredient-option-dot--fat     { background: var(--color-primary); }
+
+.ingredient-option-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ingredient-option-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ingredient-option-meta {
+  font-size: 0.74rem;
+  color: var(--color-on-surface-var);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ingredient-option-per {
+  opacity: 0.6;
+}
+
+.ingredient-option-check {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ingredient-option-check svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ingredient-option-empty {
+  text-align: center;
+  font-size: 0.86rem;
+  color: var(--color-on-surface-var);
+  padding: 20px 12px;
+}
+
+/* ── Wiersz ilość + dodaj ── */
+.ingredient-picker-row {
+  display: flex;
+  gap: 8px;
+}
+
+.ingredient-amount {
+  flex: 1;
+  padding: 12px 14px !important;
+  border-radius: 12px;
+  background: var(--color-surface-high);
+}
+
+.ingredient-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-primary);
+  color: var(--color-bg);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: transform 0.15s, box-shadow 0.2s;
+}
+
+.ingredient-add-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(180, 193, 251, 0.3);
+}
+
+.ingredient-add-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ingredient-add-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.6;
+  stroke-linecap: round;
+}

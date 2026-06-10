@@ -282,27 +282,30 @@
   background: transparent;
   border: none;
   color: var(--color-on-surface-var);
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
 }
 
 .meal-item-more:hover {
-  background: var(--color-surface-high);
-  color: var(--color-on-surface);
+  background: rgba(232, 90, 90, 0.18);
+  color: #ff8a8a;
 }
 
 .meal-item-more svg {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   stroke: currentColor;
-  fill: currentColor;
-  stroke-width: 0.5;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ── Empty meal placeholder ── */

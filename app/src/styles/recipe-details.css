@@ -1,0 +1,215 @@
+.rd-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  background: rgba(7, 9, 18, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  /* zostaw miejsce nad bottomnav (~92px) + safe-area + odstęp */
+  padding: 16px 16px calc(108px + env(safe-area-inset-bottom, 0px));
+  animation: rd-fade-in 0.18s ease-out;
+}
+
+@keyframes rd-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.rd-card {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: var(--color-surface);
+  border-radius: 24px;
+  padding: 22px 22px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
+  animation: rd-slide-up 0.22s ease-out;
+}
+
+@keyframes rd-slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.rd-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-surface-high);
+  color: var(--color-on-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.rd-close:hover {
+  background: var(--color-surface-bright);
+}
+
+.rd-close svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+
+.rd-head {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 40px;
+}
+
+.rd-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.15;
+}
+
+.rd-kcal {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.rd-kcal-value {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.rd-kcal-label {
+  font-size: 0.78rem;
+  color: var(--color-on-surface-var);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.rd-macros {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.rd-macro {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  background: var(--color-surface-high);
+  border-radius: 12px;
+}
+
+.rd-macro-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.rd-macro-label--protein { color: var(--color-tertiary); }
+.rd-macro-label--carbs   { color: var(--color-secondary); }
+.rd-macro-label--fat     { color: var(--color-primary); }
+
+.rd-macro-value {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
+
+.rd-section-title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-top: 4px;
+}
+
+.rd-empty {
+  font-size: 0.9rem;
+  color: var(--color-on-surface-var);
+  padding: 18px 16px;
+  background: var(--color-surface-high);
+  border-radius: 12px;
+  text-align: center;
+}
+
+.rd-ingredients {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rd-ingredient {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--color-surface-high);
+  border-radius: 12px;
+}
+
+.rd-ingredient--missing {
+  opacity: 0.6;
+}
+
+.rd-ingredient-dot {
+  flex-shrink: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-on-surface-var);
+}
+
+.rd-ingredient-dot--protein { background: var(--color-tertiary); }
+.rd-ingredient-dot--carbs   { background: var(--color-secondary); }
+.rd-ingredient-dot--fat     { background: var(--color-primary); }
+
+.rd-ingredient-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.rd-ingredient-name {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rd-ingredient-sub {
+  font-size: 0.76rem;
+  color: var(--color-on-surface-var);
+}
+
+.rd-ingredient-amount {
+  font-size: 0.85rem;
+  color: var(--color-on-surface-var);
+  margin-left: auto;
+}

@@ -1,5 +1,17 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import {
+  getIngredient,
+  getDominantMacro,
+  calcForAmount,
+} from "../../lib/ingredients";
+import { getRecipe } from "../../lib/recipesRepo";
+import {
+  getEntries,
+  removeEntry,
+  MEAL_SLOTS,
+  DAILY_GOAL_KCAL,
+} from "../../lib/journalRepo";
 import "../../styles/journal.css";
 
 const MONTHS_PL = [
@@ -7,77 +19,32 @@ const MONTHS_PL = [
   "lipca", "sierpnia", "września", "października", "listopada", "grudnia",
 ];
 
-const DEFAULT_DAY = {
-  goal: 2400,
-  consumed: 980,
-  remaining: 1420,
-  meals: [
-    {
-      id: "sniadanie",
-      name: "Śniadanie",
-      time: "07:30",
-      kcal: 420,
-      items: [
-        { id: 1, icon: "croissant", name: "Owsianka z borówkami", grams: "350g", kcal: 320 },
-        { id: 2, icon: "coffee",    name: "Kawa z mlekiem owsianym", grams: "250ml", kcal: 100 },
-      ],
-    },
-    {
-      id: "drugie",
-      name: "Drugie Śniadanie",
-      time: "10:45",
-      kcal: 150,
-      items: [
-        { id: 3, icon: "apple", name: "Jabłko i garść orzechów", grams: "120g", kcal: 150 },
-      ],
-    },
-    {
-      id: "obiad",
-      name: "Obiad",
-      time: "14:00",
-      kcal: 410,
-      items: [
-        { id: 4, icon: "fork", name: "Poke Bowl z Łososiem", grams: "450g", kcal: 410 },
-      ],
-    },
-    {
-      id: "podwieczorek",
-      name: "Podwieczorek",
-      time: null,
-      kcal: 0,
-      planned: true,
-      items: [],
-    },
-    {
-      id: "kolacja",
-      name: "Kolacja",
-      time: null,
-      kcal: 0,
-      planned: true,
-      items: [],
-    },
-  ],
-  macros: { protein: 64, carbs: 120, fat: 32 },
+const TONE_BY_MACRO = {
+  protein: "tertiary",
+  carbs:   "secondary",
+  fat:     "primary",
 };
 
-function IconCroissant() {
-  return (
-    <svg viewBox="0 0 24 24"><path d="M4 14c2-3 6-4 10-4s7 2 6 6c-3-2-7-3-10-2s-6 0-6 0z" /><path d="M6 14c-1 2 0 4 2 4M18 16c1-2 0-4-2-4" /></svg>
-  );
+function plPorcja(n) {
+  if (n === 1) return "porcja";
+  const lastDigit = n % 10;
+  const lastTwo = n % 100;
+  if (lastDigit >= 2 && lastDigit <= 4 && (lastTwo < 12 || lastTwo > 14)) return "porcje";
+  return "porcji";
 }
-function IconCoffee() {
-  return (
-    <svg viewBox="0 0 24 24"><path d="M4 8h12v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4z" /><path d="M16 10h2a2 2 0 0 1 0 4h-2" /><path d="M7 4c1 1 1 2 0 3M11 4c1 1 1 2 0 3" /></svg>
-  );
+
+function isoDay(date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
 }
-function IconApple() {
-  return (
-    <svg viewBox="0 0 24 24"><path d="M12 7c-3-3-7-2-7 3 0 4 3 9 7 9s7-5 7-9c0-5-4-6-7-3z" /><path d="M12 7c0-2 1-3 2-4" /></svg>
-  );
-}
+
 function IconFork() {
   return (
     <svg viewBox="0 0 24 24"><path d="M7 3v8a2 2 0 1 0 4 0V3" /><path d="M9 11v10" /><path d="M17 3c-2 1-3 3-3 6s1 4 3 4v8" /></svg>
+  );
+}
+function IconChef() {
+  return (
+    <svg viewBox="0 0 24 24"><path d="M6 14h12v6H6z" /><path d="M7 14a4 4 0 1 1 2-7 4 4 0 0 1 6 0 4 4 0 1 1 2 7" /></svg>
   );
 }
 function IconPlusCircle() {
@@ -85,9 +52,9 @@ function IconPlusCircle() {
     <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" /><path d="M12 8v8M8 12h8" /></svg>
   );
 }
-function IconDots() {
+function IconTrash() {
   return (
-    <svg viewBox="0 0 24 24"><circle cx="12" cy="6"  r="1.5" /><circle cx="12" cy="12" r="1.5" /><circle cx="12" cy="18" r="1.5" /></svg>
+    <svg viewBox="0 0 24 24"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></svg>
   );
 }
 function IconChevron({ dir = "left" }) {
@@ -103,12 +70,37 @@ function IconEmpty() {
   );
 }
 
-const ICON_MAP = {
-  croissant: { Cmp: IconCroissant, tone: "tertiary" },
-  coffee:    { Cmp: IconCoffee,    tone: "primary"  },
-  apple:     { Cmp: IconApple,     tone: "secondary"},
-  fork:      { Cmp: IconFork,      tone: "tertiary" },
-};
+// Zwraca obliczone wartości żywieniowe + meta-info do wyświetlenia.
+// Zwraca null jeśli wpis odwołuje się do nieistniejącego składnika/przepisu.
+function computeEntry(entry) {
+  if (entry.type === "recipe") {
+    const recipe = getRecipe(entry.recipeId);
+    if (!recipe) return null;
+    return {
+      isRecipe: true,
+      name: recipe.name,
+      kcal: recipe.kcal * entry.portions,
+      protein: recipe.macros.protein * entry.portions,
+      carbs: recipe.macros.carbs * entry.portions,
+      fat: recipe.macros.fat * entry.portions,
+      sub: `${entry.portions} ${plPorcja(entry.portions)}`,
+      tone: "primary",
+    };
+  }
+  const ing = getIngredient(entry.ingredientId);
+  if (!ing) return null;
+  const c = calcForAmount(ing, entry.amount);
+  return {
+    isRecipe: false,
+    name: ing.name,
+    kcal: c.kcal,
+    protein: c.protein,
+    carbs: c.carbs,
+    fat: c.fat,
+    sub: `${entry.amount} g`,
+    tone: TONE_BY_MACRO[getDominantMacro(ing)],
+  };
+}
 
 function formatDateLabel(date) {
   const today = new Date();
@@ -130,6 +122,7 @@ function formatLongDate(date) {
 export default function JournalPage() {
   const navigate = useNavigate();
   const { date: dateParam } = useParams();
+  const [tick, setTick] = useState(0);
 
   const currentDate = useMemo(() => {
     if (dateParam) {
@@ -139,14 +132,52 @@ export default function JournalPage() {
     return new Date();
   }, [dateParam]);
 
-  const day = DEFAULT_DAY;
-  const progressPct = Math.min((day.consumed / day.goal) * 100, 100);
+  const dayISO = useMemo(() => isoDay(currentDate), [currentDate]);
+
+  const entries = useMemo(() => getEntries(dayISO), [dayISO, tick]);
+
+  // Grupowanie po porze dnia + obliczanie sum.
+  const groups = useMemo(() => {
+    const acc = MEAL_SLOTS.map((s) => ({ slot: s, items: [], kcal: 0 }));
+    const byId = Object.fromEntries(acc.map((g) => [g.slot.id, g]));
+    for (const entry of entries) {
+      const computed = computeEntry(entry);
+      if (!computed) continue;
+      const slotId = entry.mealSlot && byId[entry.mealSlot] ? entry.mealSlot : "obiad";
+      byId[slotId].items.push({ entry, computed });
+      byId[slotId].kcal += computed.kcal;
+    }
+    return acc;
+  }, [entries]);
+
+  const totals = useMemo(() => {
+    return entries.reduce(
+      (acc, entry) => {
+        const c = computeEntry(entry);
+        if (!c) return acc;
+        acc.kcal    += c.kcal;
+        acc.protein += c.protein;
+        acc.carbs   += c.carbs;
+        acc.fat     += c.fat;
+        return acc;
+      },
+      { kcal: 0, protein: 0, carbs: 0, fat: 0 }
+    );
+  }, [entries]);
+
+  const consumed = Math.round(totals.kcal);
+  const remaining = Math.max(DAILY_GOAL_KCAL - consumed, 0);
+  const progressPct = Math.min((consumed / DAILY_GOAL_KCAL) * 100, 100);
 
   function shiftDay(offset) {
     const next = new Date(currentDate);
     next.setDate(next.getDate() + offset);
-    const iso = next.toISOString().slice(0, 10);
-    navigate(`/journal/${iso}`);
+    navigate(`/journal/${isoDay(next)}`);
+  }
+
+  function handleRemove(entryId) {
+    removeEntry(entryId);
+    setTick((t) => t + 1);
   }
 
   return (
@@ -168,18 +199,18 @@ export default function JournalPage() {
         <div className="journal-summary-main">
           <div className="journal-summary-label">Pozostało</div>
           <div className="journal-summary-value">
-            {day.remaining.toLocaleString("pl-PL")}
+            {remaining.toLocaleString("pl-PL")}
             <span className="journal-summary-unit">kcal</span>
           </div>
         </div>
         <div className="journal-summary-side">
           <div className="journal-summary-col">
             <span className="journal-summary-small">Zjedzone</span>
-            <span className="journal-summary-num">{day.consumed}</span>
+            <span className="journal-summary-num">{consumed}</span>
           </div>
           <div className="journal-summary-col">
             <span className="journal-summary-small">Cel</span>
-            <span className="journal-summary-num">{day.goal.toLocaleString("pl-PL")}</span>
+            <span className="journal-summary-num">{DAILY_GOAL_KCAL.toLocaleString("pl-PL")}</span>
           </div>
         </div>
         <div className="journal-summary-bar">
@@ -188,72 +219,80 @@ export default function JournalPage() {
       </section>
 
       <div className="journal-meals">
-        {day.meals.map((meal) => (
-          <section key={meal.id} className={`meal-group ${meal.planned ? "meal-group--planned" : ""}`}>
-            <header className="meal-group-head">
-              <div>
-                <h2 className="meal-group-name">{meal.name}</h2>
-                <p className="meal-group-meta">
-                  {meal.planned
-                    ? `Planowan${meal.name.endsWith("a") ? "a" : "y"} • ${meal.kcal} KCAL`
-                    : `${meal.time} • ${meal.kcal} KCAL`}
-                </p>
-              </div>
-              <button
-                type="button"
-                className="meal-group-add"
-                onClick={() => navigate("/add")}
-              >
-                <IconPlusCircle />
-                <span>Dodaj produkt</span>
-              </button>
-            </header>
+        {groups.map((group) => {
+          const empty = group.items.length === 0;
+          return (
+            <section
+              key={group.slot.id}
+              className={`meal-group ${empty ? "meal-group--planned" : ""}`}
+            >
+              <header className="meal-group-head">
+                <div>
+                  <h2 className="meal-group-name">{group.slot.label}</h2>
+                  <p className="meal-group-meta">
+                    {empty
+                      ? "Brak wpisów"
+                      : `${group.items.length} pozycji • ${Math.round(group.kcal)} KCAL`}
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  className="meal-group-add"
+                  onClick={() => navigate("/add")}
+                >
+                  <IconPlusCircle />
+                  <span>Dodaj produkt</span>
+                </button>
+              </header>
 
-            {meal.items.length === 0 ? (
-              <div className="meal-empty">
-                <IconEmpty />
-                <span>Brak wpisów dla tego posiłku</span>
-              </div>
-            ) : (
-              <ul className="meal-items">
-                {meal.items.map((it) => {
-                  const { Cmp, tone } = ICON_MAP[it.icon] ?? { Cmp: IconFork, tone: "tertiary" };
-                  return (
-                    <li key={it.id} className="meal-item">
-                      <div className={`meal-item-icon meal-item-icon--${tone}`}>
-                        <Cmp />
+              {empty ? (
+                <div className="meal-empty">
+                  <IconEmpty />
+                  <span>Brak wpisów dla tego posiłku</span>
+                </div>
+              ) : (
+                <ul className="meal-items">
+                  {group.items.map(({ entry, computed }) => (
+                    <li key={entry.id} className="meal-item">
+                      <div className={`meal-item-icon meal-item-icon--${computed.tone}`}>
+                        {computed.isRecipe ? <IconChef /> : <IconFork />}
                       </div>
                       <div className="meal-item-body">
-                        <div className="meal-item-name">{it.name}</div>
-                        <div className="meal-item-sub">{it.grams} • {it.kcal} kcal</div>
+                        <div className="meal-item-name">{computed.name}</div>
+                        <div className="meal-item-sub">{computed.sub} • {Math.round(computed.kcal)} kcal</div>
                       </div>
-                      <button type="button" className="meal-item-more" aria-label="Opcje">
-                        <IconDots />
+                      <button
+                        type="button"
+                        className="meal-item-more"
+                        onClick={() => handleRemove(entry.id)}
+                        aria-label={`Usuń ${computed.name}`}
+                      >
+                        <IconTrash />
                       </button>
                     </li>
-                  );
-                })}
-              </ul>
-            )}
-          </section>
-        ))}
+                  ))}
+                </ul>
+              )}
+            </section>
+          );
+        })}
       </div>
 
       <section className="journal-macros">
         <div className="journal-macro">
           <span className="journal-macro-bar journal-macro-bar--protein" />
           <span className="journal-macro-label">Białko</span>
-          <span className="journal-macro-value">{day.macros.protein}g</span>
+          <span className="journal-macro-value">{Math.round(totals.protein)}g</span>
         </div>
         <div className="journal-macro">
           <span className="journal-macro-bar journal-macro-bar--carbs" />
           <span className="journal-macro-label">Węgle</span>
-          <span className="journal-macro-value">{day.macros.carbs}g</span>
+          <span className="journal-macro-value">{Math.round(totals.carbs)}g</span>
         </div>
         <div className="journal-macro">
           <span className="journal-macro-bar journal-macro-bar--fat" />
           <span className="journal-macro-label">Tłuszcze</span>
-          <span className="journal-macro-value">{day.macros.fat}g</span>
+          <span className="journal-macro-value">{Math.round(totals.fat)}g</span>
         </div>
       </section>
     </div>

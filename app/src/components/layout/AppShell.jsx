@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { subscribe, getTodaySummary, DAILY_GOAL_KCAL } from "../../lib/journalRepo";
 import "../../styles/shell.css";
 
 function IconHome() {
@@ -73,6 +75,16 @@ function navClass({ isActive }) {
 export default function AppShell() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const [todaySummary, setTodaySummary] = useState(() => getTodaySummary());
+
+  useEffect(() => {
+    const refresh = () => setTodaySummary(getTodaySummary());
+    refresh();
+    return subscribe(refresh);
+  }, []);
+
+  const kcalPct = Math.min((todaySummary.kcal / DAILY_GOAL_KCAL) * 100, 100);
+  const kcalConsumed = Math.round(todaySummary.kcal);
 
   async function handleLogout() {
     await logout();
@@ -117,14 +129,38 @@ export default function AppShell() {
             <span>Dziennik</span>
           </NavLink>
 
-          <button
-            type="button"
-            className="bottomnav-fab"
-            onClick={() => navigate("/add")}
-            aria-label="Dodaj posiłek"
-          >
-            <IconPlus />
-          </button>
+          <div className="bottomnav-fab-wrap">
+            <svg
+              className="bottomnav-fab-ring"
+              viewBox="0 0 64 64"
+              aria-hidden="true"
+            >
+              <circle
+                className="bottomnav-fab-ring-track"
+                cx="32"
+                cy="32"
+                r="29"
+                pathLength="100"
+              />
+              <circle
+                className="bottomnav-fab-ring-fill"
+                cx="32"
+                cy="32"
+                r="29"
+                pathLength="100"
+                style={{ strokeDasharray: `${kcalPct} 100` }}
+              />
+            </svg>
+            <button
+              type="button"
+              className="bottomnav-fab"
+              onClick={() => navigate("/add")}
+              aria-label={`Dodaj posiłek. Dziś: ${kcalConsumed} z ${DAILY_GOAL_KCAL} kcal.`}
+              title={`${kcalConsumed} / ${DAILY_GOAL_KCAL} kcal`}
+            >
+              <IconPlus />
+            </button>
+          </div>
 
           <NavLink to="/recipes" className={navClass}>
             <IconUtensils />

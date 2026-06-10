@@ -15,6 +15,7 @@ import DashboardPage from "./pages/app/DashboardPage";
 import JournalPage from "./pages/app/JournalPage";
 import AddMealPage from "./pages/app/AddMealPage";
 import RecipesPage from "./pages/app/RecipesPage";
+import NewRecipePage from "./pages/app/NewRecipePage";
 import ProgressPage from "./pages/app/ProgressPage";
 import ProfilePage from "./pages/app/ProfilePage";
 import OnboardingPage from "./pages/app/OnboardingPage";
@@ -72,6 +73,7 @@ function Router() {
         <Route path="/journal/:date" element={<PageTransition><JournalPage /></PageTransition>} />
         <Route path="/add"           element={<PageTransition><AddMealPage /></PageTransition>} />
         <Route path="/recipes"       element={<PageTransition><RecipesPage /></PageTransition>} />
+        <Route path="/recipes/new"   element={<PageTransition><NewRecipePage /></PageTransition>} />
         <Route path="/progress"      element={<PageTransition><ProgressPage /></PageTransition>} />
       </Route>
 

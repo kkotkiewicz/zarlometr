@@ -111,6 +111,16 @@
     var(--color-surface-high);
 }
 
+/* User-created — solid color (background ustawiane inline) */
+.recipe-tile-photo--solid {
+  background: var(--color-surface-high);
+}
+
+/* User-created — uploaded image */
+.recipe-tile-photo--image {
+  background: var(--color-surface-high);
+}
+
 .recipe-tile-kcal {
   position: absolute;
   top: 12px;
@@ -220,5 +230,43 @@
   justify-content: center;
   font-size: 1.6rem;
   line-height: 1;
+}
+
+.recipe-tile-remove {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-high);
+  border: none;
+  border-radius: 999px;
+  color: var(--color-on-surface-var);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.recipe-tile-remove:hover {
+  background: rgba(232, 90, 90, 0.18);
+  color: #ff8a8a;
+}
+
+.recipe-tile-remove svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.recipes-empty {
+  text-align: center;
+  color: var(--color-on-surface-var);
+  font-size: 0.92rem;
+  padding: 32px 16px;
+  background: var(--color-surface);
+  border-radius: 18px;
 }
 
