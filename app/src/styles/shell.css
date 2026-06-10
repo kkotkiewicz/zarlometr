@@ -37,6 +37,12 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   color: var(--color-on-surface);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.topbar-avatar:hover {
+  background: var(--color-surface-bright);
 }
 
 .topbar-avatar--btn {

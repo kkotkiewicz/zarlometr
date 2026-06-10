@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { auth, db, googleProvider } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 import { IconUser, IconBadge, IconMail, IconLock, IconLockRepeat } from "../../components/icons";
 import TextField from "../../components/ui/TextField";
 import Button from "../../components/ui/Button";
@@ -35,6 +36,7 @@ async function saveUserDoc(uid, data) {
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { DoNotFirebase, login } = useAuth();
 
   const [form, setForm] = useState({
     name: "",
@@ -72,6 +74,12 @@ export default function RegisterPage() {
       return;
     }
 
+    if (DoNotFirebase) {
+      login({ name, nickname, email: email.trim() });
+      navigate("/onboarding", { replace: true });
+      return;
+    }
+
     setLoading(true);
     try {
       const { user } = await createUserWithEmailAndPassword(auth, email, password);
@@ -87,6 +95,13 @@ export default function RegisterPage() {
 
   async function handleGoogle() {
     setError("");
+
+    if (DoNotFirebase) {
+      login({ name: "Dev Google", displayName: "Dev Google" });
+      navigate("/onboarding", { replace: true });
+      return;
+    }
+
     setLoading(true);
     try {
       const { user } = await signInWithPopup(auth, googleProvider);

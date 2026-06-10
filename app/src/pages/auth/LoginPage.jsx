@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth, googleProvider } from "../../firebase";
+import { useAuth } from "../../context/AuthContext";
 import { IconMail, IconLock } from "../../components/icons";
 import TextField from "../../components/ui/TextField";
 import Button from "../../components/ui/Button";
@@ -29,6 +30,7 @@ function firebaseErrorMsg(code) {
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { DoNotFirebase, login } = useAuth();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -41,6 +43,12 @@ export default function LoginPage() {
 
     if (!email.trim() || !password) {
       setError("Uzupełnij wszystkie pola.");
+      return;
+    }
+
+    if (DoNotFirebase) {
+      login({ email: email.trim() });
+      navigate("/", { replace: true });
       return;
     }
 
@@ -57,6 +65,13 @@ export default function LoginPage() {
 
   async function handleGoogle() {
     setError("");
+
+    if (DoNotFirebase) {
+      login({ name: "Dev Google", displayName: "Dev Google" });
+      navigate("/", { replace: true });
+      return;
+    }
+
     setLoading(true);
     try {
       await signInWithPopup(auth, googleProvider);

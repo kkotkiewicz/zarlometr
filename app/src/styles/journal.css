@@ -1,0 +1,371 @@
+/* ── Journal layout ── */
+.journal {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ── Date bar ── */
+.journal-datebar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 4px 8px;
+}
+
+.journal-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-var);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.journal-arrow:hover {
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+.journal-arrow svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.journal-date {
+  text-align: center;
+  flex: 1;
+}
+
+.journal-date-label {
+  font-family: var(--font-display);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.1;
+}
+
+.journal-date-sub {
+  font-size: 0.82rem;
+  color: var(--color-on-surface-var);
+  margin-top: 4px;
+}
+
+/* ── Summary card ── */
+.journal-summary {
+  position: relative;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  padding: 18px 20px 22px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  align-items: center;
+  gap: 18px;
+}
+
+.journal-summary-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.journal-summary-value {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1.05;
+  margin-top: 4px;
+}
+
+.journal-summary-unit {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-on-surface-var);
+}
+
+.journal-summary-side {
+  display: flex;
+  gap: 20px;
+  justify-content: flex-end;
+}
+
+.journal-summary-col {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.journal-summary-small {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.journal-summary-num {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  margin-top: 4px;
+}
+
+.journal-summary-bar {
+  grid-column: 1 / -1;
+  height: 4px;
+  background: var(--color-surface-high);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.journal-summary-bar-fill {
+  height: 100%;
+  background: var(--color-secondary);
+  box-shadow: 0 0 12px rgba(232, 233, 113, 0.6);
+  border-radius: 99px;
+  transition: width 0.4s ease;
+}
+
+/* ── Meal groups ── */
+.journal-meals {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.meal-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meal-group-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.meal-group-name {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+  line-height: 1.1;
+}
+
+.meal-group--planned .meal-group-name {
+  color: var(--color-on-surface-var);
+}
+
+.meal-group-meta {
+  margin-top: 2px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.meal-group-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.meal-group-add:hover {
+  background: rgba(180, 193, 251, 0.1);
+}
+
+.meal-group-add svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ── Meal items ── */
+.meal-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meal-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border-radius: 999px;
+  padding: 10px 14px 10px 10px;
+}
+
+.meal-item-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.meal-item-icon svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.meal-item-icon--tertiary  { background: rgba(232, 147, 90, 0.18);  color: var(--color-tertiary); }
+.meal-item-icon--primary   { background: rgba(180, 193, 251, 0.18); color: var(--color-primary);  }
+.meal-item-icon--secondary { background: rgba(232, 233, 113, 0.18); color: var(--color-secondary);}
+
+.meal-item-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.meal-item-name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--color-on-surface);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meal-item-sub {
+  font-size: 0.78rem;
+  color: var(--color-on-surface-var);
+}
+
+.meal-item-more {
+  background: transparent;
+  border: none;
+  color: var(--color-on-surface-var);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.meal-item-more:hover {
+  background: var(--color-surface-high);
+  color: var(--color-on-surface);
+}
+
+.meal-item-more svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 0.5;
+}
+
+/* ── Empty meal placeholder ── */
+.meal-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 1.5px dashed var(--color-outline);
+  border-radius: 999px;
+  padding: 18px 18px;
+  color: var(--color-on-surface-var);
+  font-size: 0.86rem;
+}
+
+.meal-empty svg {
+  width: 22px;
+  height: 22px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 1.6;
+}
+
+/* ── Day macros pills ── */
+.journal-macros {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.journal-macro {
+  background: var(--color-surface);
+  border-radius: 18px;
+  padding: 12px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.journal-macro-bar {
+  display: block;
+  width: 36px;
+  height: 4px;
+  border-radius: 99px;
+}
+
+.journal-macro-bar--protein { background: var(--color-tertiary); }
+.journal-macro-bar--carbs   { background: var(--color-secondary); }
+.journal-macro-bar--fat     { background: var(--color-primary); }
+
+.journal-macro-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-on-surface-var);
+}
+
+.journal-macro-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--color-on-surface);
+}
