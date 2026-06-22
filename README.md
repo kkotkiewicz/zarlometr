@@ -116,7 +116,7 @@ Integracja zrealizowana przez `react-ga4`. Inicjalizacja w [app/src/lib/analytic
 
 ![Google Analytics - przegląd ruchu](docs/screenshots/ga-overview.png)
 
-![Google Analytics - aktywni użytkownicy w czasie rzeczywistym](docs/screenshots/ga-realtime.png)
+![Google Analytics - overview](docs/screenshots/ga-realtime.png)
 
 ## Hotjar
 
