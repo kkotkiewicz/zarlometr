@@ -131,3 +131,7 @@ Inicjalizacja w [app/src/lib/analytics.js](app/src/lib/analytics.js#L15-L21) (fu
 ## Deploy
 
 Aplikacja przygotowana pod Railway (skrypt `start` + `railway.json` w katalogu `app/`).
+
+![Railway - dashboard](docs/screenshots/railway-dashboard.png)
+
+![Railway - aplikacja](docs/screenshots/railway-app.png)
