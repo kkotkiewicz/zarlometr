@@ -120,11 +120,24 @@ Integracja zrealizowana przez `react-ga4`. Inicjalizacja w [app/src/lib/analytic
 
 ## Hotjar
 
+Hotjar to narzędzie do analizy zachowań użytkowników, które pozwala na:
+- **Nagrywanie sesji** — odtwarzanie rzeczywistych interakcji użytkowników z aplikacją (kliknięcia, scrolling, ruchy myszką)
+- **Heatmapy** — wizualizacja miejsc, w które użytkownicy najczęściej klikają i jak daleko przewijają strony
+- **Wykrywanie problemów UX** — identyfikacja miejsc, gdzie użytkownicy napotykają trudności lub porzucają proces
+
 Inicjalizacja w [app/src/lib/analytics.js](app/src/lib/analytics.js#L15-L21) (funkcja `initHotjar`) wywoływana w [app/src/App.jsx](app/src/App.jsx#L88). ID czytane z `VITE_HOTJAR_ID`.
 
-![Hotjar - dashboard](docs/screenshots/hotjar-dashboard.png)
+### Lista sesji użytkowników
 
-![Hotjar - heatmapa](docs/screenshots/hotjar-heatmap.png)
+Podgląd wszystkich nagranych sesji z podstawowymi informacjami: czas trwania, liczba pageviews, urządzenie, lokalizacja.
+
+![Hotjar - lista sesji](docs/screenshots/hotjar-sessions.png)
+
+### Odtwarzanie sesji (Session Replay)
+
+Nagranie rzeczywistej sesji użytkownika pokazujące sekwencję akcji, odwiedzonych stron i interakcji z interfejsem.
+
+![Hotjar - odtwarzanie sesji](docs/screenshots/hotjar-session-replay.png)
 
 ---
 
